@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeHer — Women Safety Android App</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #2a1f1f;
+    --bg2: #321f1f;
+    --card: #3d2828;
+    --accent: #c9a080;
+    --accent2: #e8c4a0;
+    --text: #f0e6d8;
+    --muted: #a89080;
+    --highlight: #d4956a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(42,31,31,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,160,128,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent2);
+    letter-spacing: 0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent2); }
+
+  /* SLIDE */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 6rem 0 0;
+  }
+
+  .hero-art {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1010 0%, #2d1a18 40%, #3d2520 100%);
+    overflow: hidden;
+  }
+
+  .hero-art::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,160,128,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%,-50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%,-50%) scale(1.1); opacity: 1; }
+  }
+
+  .hero-figure {
+    position: relative;
+    z-index: 2;
+    font-size: 12rem;
+    animation: floatUp 6s ease-in-out infinite;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5));
+  }
+
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 4rem 4rem 5rem;
+    background: var(--bg);
+    position: relative;
+  }
+
+  .hero-content::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -2px;
+    width: 2px; height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  }
+
+  .hero-tag {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(201,160,128,0.4);
+    color: var(--accent);
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title span { color: var(--highlight); }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 480px;
+    font-weight: 300;
+  }
+
+  .hero-scroll {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, var(--accent), transparent);
+    animation: expandLine 2s ease-in-out infinite;
+  }
+
+  @keyframes expandLine {
+    0%, 100% { width: 40px; opacity: 0.5; }
+    50% { width: 80px; opacity: 1; }
+  }
+
+  /* SECTION HEADERS */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 0 2rem;
+  }
+
+  .section-num {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* PROBLEM SECTION */
+  .problem-section {
+    padding: 8rem 4rem;
+    background: var(--bg2);
+    min-height: auto;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .problem-card {
+    background: var(--bg);
+    border: 1px solid rgba(201,160,128,0.15);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .problem-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(201,160,128,0.4);
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), transparent);
+  }
+
+  .problem-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .problem-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 1rem;
+  }
+
+  .problem-text {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  /* FEATURES SECTION */
+  .features-section {
+    padding: 8rem 4rem;
+    background: var(--bg);
+    min-height: auto;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .feature-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    padding: 2rem;
+    transition: all 0.3s;
+    cursor: default;
+    position: relative;
+  }
+
+  .feature-card:hover {
+    background: #4a3030;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+
+  .feature-num {
+    position: absolute;
+    top: 1.2rem; right: 1.5rem;
+    font-size: 0.65rem;
+    color: rgba(201,160,128,0.3);
+    letter-spacing: 0.15em;
+    font-weight: 500;
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .feature-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  /* FLOW SECTION */
+  .flow-section {
+    padding: 8rem 4rem;
+    background: var(--bg2);
+    min-height: auto;
+  }
+
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    min-width: 140px;
+    padding: 2rem 1rem;
+    position: relative;
+    text-align: center;
+  }
+
+  .flow-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: var(--bg);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s;
+  }
+
+  .flow-step:hover .flow-circle {
+    background: var(--accent);
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(201,160,128,0.4);
+  }
+
+  .flow-arrow {
+    font-size: 1.5rem;
+    color: rgba(201,160,128,0.3);
+    padding: 0 0.5rem;
+    align-self: center;
+    padding-bottom: 3rem;
+  }
+
+  .flow-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .flow-time {
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .flow-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 3rem;
+    font-style: italic;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ARCHITECTURE SECTION */
+  .arch-section {
+    padding: 8rem 4rem;
+    background: var(--bg);
+    min-height: auto;
+  }
+
+  .arch-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .arch-diagram {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 360px;
+  }
+
+  .arch-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .arch-ring-1 {
+    width: 320px; height: 320px;
+    border-color: rgba(201,160,128,0.2);
+    background: rgba(201,160,128,0.03);
+  }
+
+  .arch-ring-2 {
+    width: 220px; height: 220px;
+    border-color: rgba(201,160,128,0.3);
+    background: rgba(201,160,128,0.06);
+    animation: spin 20s linear infinite;
+  }
+
+  .arch-ring-3 {
+    width: 120px; height: 120px;
+    border-color: var(--accent);
+    background: rgba(201,160,128,0.15);
+    font-size: 2rem;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .arch-label-outer {
+    position: absolute;
+    top: 20px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .arch-label-mid {
+    position: absolute;
+    bottom: 60px;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+  }
+
+  .arch-components { display: flex; flex-direction: column; gap: 2rem; }
+
+  .arch-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .arch-arrow {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .arch-item-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 0.5rem;
+  }
+
+  .arch-item-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* FILES SECTION */
+  .files-section {
+    padding: 8rem 4rem;
+    background: var(--bg2);
+    min-height: auto;
+  }
+
+  .files-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .file-tree {
+    background: #1a1010;
+    border: 1px solid rgba(201,160,128,0.2);
+    border-radius: 4px;
+    padding: 2rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+  }
+
+  .file-tree-header {
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .file-item {
+    color: var(--muted);
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: color 0.2s;
+  }
+
+  .file-item:hover { color: var(--accent2); }
+
+  .file-item-icon { font-size: 0.9rem; }
+
+  .file-desc-list { display: flex; flex-direction: column; gap: 2rem; }
+
+  .file-desc-item {}
+
+  .file-desc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--accent2);
+    margin-bottom: 0.5rem;
+  }
+
+  .file-desc-text {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* FEATURES TABLE */
+  .table-section {
+    padding: 8rem 4rem;
+    background: var(--bg);
+    min-height: auto;
+  }
+
+  .features-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-collapse: collapse;
+  }
+
+  .features-table tr {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s;
+  }
+
+  .features-table tr:hover { background: rgba(201,160,128,0.05); }
+
+  .features-table td {
+    padding: 1.4rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .features-table td:first-child {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--accent2);
+    width: 200px;
+    white-space: nowrap;
+  }
+
+  .features-table td:last-child { color: var(--muted); }
+
+  /* FUTURE SECTION */
+  .future-section {
+    padding: 8rem 4rem;
+    background: var(--bg2);
+    min-height: auto;
+  }
+
+  .future-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .future-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .future-item {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: var(--bg);
+    border: 1px solid rgba(201,160,128,0.1);
+    border-radius: 4px;
+    transition: all 0.3s;
+  }
+
+  .future-item:hover {
+    border-color: rgba(201,160,128,0.3);
+    transform: translateX(6px);
+  }
+
+  .future-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+  }
+
+  .future-text {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .why-box {
+    background: var(--bg);
+    border: 1px solid rgba(201,160,128,0.2);
+    border-radius: 4px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--accent), var(--highlight));
+  }
+
+  .why-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 2rem;
+  }
+
+  .why-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .why-item strong { color: var(--text); }
+
+  .why-check { color: var(--accent); flex-shrink: 0; }
+
+  .tagline {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(201,160,128,0.15);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--accent2);
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 4rem;
+    background: #1a1010;
+    border-top: 1px solid rgba(201,160,128,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .footer-text {
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-art { min-height: 50vh; }
+    .problem-grid, .features-grid { grid-template-columns: 1fr; }
+    .arch-inner, .files-inner, .future-inner { grid-template-columns: 1fr; }
+    .flow-steps { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SafeHer</div>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#flow">SOS Flow</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#future">Future</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="slide hero" id="home">
+  <div class="hero-art">
+    <div class="hero-figure"><img width="500px" src="kbsad.png"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="tag">Android Studio Project</span>
+      <span class="tag">Java · Material Design</span>
+    </div>
+    <h1 class="hero-title">SafeHer —<br><span>Women Safety</span><br>Android App</h1>
+    <p class="hero-desc">A smart, fast, and reliable emergency-response application built on Android Studio — designed to keep women safer, one tap at a time.</p>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem-section" id="problem">
+  <div class="section-header fade-in">
+    <span class="section-num">01 / 06 — The Problem</span>
+    <h2 class="section-title">The Problem We're Solving</h2>
+    <p class="section-sub">Women deserve immediate, reliable tools when safety is at risk. Today's solutions fall short.</p>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-card fade-in">
+      <span class="problem-icon">⚠️</span>
+      <div class="problem-title">Rising Safety Concerns</div>
+      <p class="problem-text">Women face increasingly frequent unsafe situations in public spaces, transit, and even at home — with limited tools for immediate help.</p>
+    </div>
+    <div class="problem-card fade-in">
+      <span class="problem-icon">⏱️</span>
+      <div class="problem-title">Delayed Emergency Response</div>
+      <p class="problem-text">Calling emergency services takes time. Fumbling with a phone during a crisis can cost critical seconds that make all the difference.</p>
+    </div>
+    <div class="problem-card fade-in">
+      <span class="problem-icon">🔒</span>
+      <div class="problem-title">No Instant Support Layer</div>
+      <p class="problem-text">Existing apps lack the combination of real-time location sharing, offline SMS fallback, and discreet escape tools in a single interface.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="section-header fade-in">
+    <span class="section-num">02 / 06 — Features</span>
+    <h2 class="section-title">Introducing SafeHer</h2>
+    <p class="section-sub">Six integrated features — all designed for speed, simplicity, and real-world reliability.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card fade-in">
+      <span class="feature-num">01</span>
+      <span class="feature-icon">🆘</span>
+      <div class="feature-name">One-Tap SOS</div>
+      <p class="feature-desc">5-second countdown trigger sends alerts instantly to all saved emergency contacts.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <span class="feature-num">02</span>
+      <span class="feature-icon">📍</span>
+      <div class="feature-name">Live GPS Sharing</div>
+      <p class="feature-desc">Real-time location delivered to trusted contacts, embedded in every alert message.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <span class="feature-num">03</span>
+      <span class="feature-icon">💬</span>
+      <div class="feature-name">SMS & WhatsApp Alerts</div>
+      <p class="feature-desc">Dual-channel messaging — works even without a data connection via SMS fallback.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <span class="feature-num">04</span>
+      <span class="feature-icon">📞</span>
+      <div class="feature-name">Fake Call Escape</div>
+      <p class="feature-desc">Fullscreen call simulation with ringtone and custom caller name to exit unsafe situations discreetly.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <span class="feature-num">05</span>
+      <span class="feature-icon">🤖</span>
+      <div class="feature-name">AI Chatbot</div>
+      <p class="feature-desc">OpenAI-powered guidance, emotional support, and real-time safety advice whenever you need it.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <span class="feature-num">06</span>
+      <span class="feature-icon">📳</span>
+      <div class="feature-name">Shake-to-Activate</div>
+      <p class="feature-desc">Three shakes trigger the full SOS sequence — no screen interaction needed at all.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOS FLOW -->
+<section class="flow-section" id="flow">
+  <div class="section-header fade-in">
+    <span class="section-num">03 / 06 — SOS Flow</span>
+    <h2 class="section-title">SOS Activation Flow</h2>
+    <p class="section-sub">From button press to full protection in under 10 seconds.</p>
+  </div>
+  <div class="flow-steps fade-in">
+    <div class="flow-step">
+      <div class="flow-circle">🆘</div>
+      <div class="flow-label">SOS Tap</div>
+      <div class="flow-time">0s</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-circle">⏱️</div>
+      <div class="flow-label">5s Countdown</div>
+      <div class="flow-time">0–5s</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-circle">📍</div>
+      <div class="flow-label">Fetch GPS</div>
+      <div class="flow-time">5–6s</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-circle">💬</div>
+      <div class="flow-label">Send SMS</div>
+      <div class="flow-time">6–8s</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-circle">📲</div>
+      <div class="flow-label">Trigger WhatsApp</div>
+      <div class="flow-time">&lt;10s</div>
+    </div>
+  </div>
+  <p class="flow-note fade-in">The entire sequence — from button press to background protection — executes in under 10 seconds, with no additional user input required after the initial tap.</p>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="arch-section" id="architecture">
+  <div class="section-header fade-in">
+    <span class="section-num">04 / 06 — Architecture</span>
+    <h2 class="section-title">App Architecture</h2>
+  </div>
+  <div class="arch-inner">
+    <div class="arch-diagram fade-in">
+      <div class="arch-ring arch-ring-1">
+        <div class="arch-label-outer">APIs & Hardware<br><small style="opacity:0.5;font-size:0.7rem">GPS · SMS · WhatsApp</small></div>
+      </div>
+      <div class="arch-ring arch-ring-2">
+        <div class="arch-label-mid">Foreground Service</div>
+      </div>
+      <div class="arch-ring arch-ring-3">🛡️</div>
+    </div>
+    <div class="arch-components fade-in">
+      <div class="arch-item">
+        <div class="arch-arrow">→</div>
+        <div>
+          <div class="arch-item-title">Java + Android SDK</div>
+          <p class="arch-item-desc">Core app logic written in Java using the standard Android SDK for maximum compatibility.</p>
+        </div>
+      </div>
+      <div class="arch-item">
+        <div class="arch-arrow">→</div>
+        <div>
+          <div class="arch-item-title">Foreground Service</div>
+          <p class="arch-item-desc">SosService.java keeps background protection active even when the screen is off or the app is minimized.</p>
+        </div>
+      </div>
+      <div class="arch-item">
+        <div class="arch-arrow">→</div>
+        <div>
+          <div class="arch-item-title">BootReceiver</div>
+          <p class="arch-item-desc">Broadcast Receiver automatically restarts the protective service after every device reboot.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILES -->
+<section class="files-section" id="files">
+  <div class="section-header fade-in">
+    <span class="section-num">05 / 06 — Structure</span>
+    <h2 class="section-title">Project File Structure</h2>
+  </div>
+  <div class="files-inner">
+    <div class="file-tree fade-in">
+      <div class="file-tree-header">SafeHer/</div>
+      <div class="file-item"><span class="file-item-icon">📄</span> MainActivity.java</div>
+      <div class="file-item"><span class="file-item-icon">📄</span> SosActivity.java</div>
+      <div class="file-item"><span class="file-item-icon">📄</span> ContactsActivity.java</div>
+      <div class="file-item"><span class="file-item-icon">📄</span> ChatActivity.java</div>
+      <div class="file-item"><span class="file-item-icon">📄</span> FakeCallActivity.java</div>
+      <div class="file-item"><span class="file-item-icon">⚙️</span> SosService.java</div>
+      <div class="file-item"><span class="file-item-icon">📡</span> BootReceiver.java</div>
+    </div>
+    <div class="file-desc-list fade-in">
+      <div class="file-desc-item">
+        <div class="file-desc-title">Activities</div>
+        <p class="file-desc-text">Each Java file manages one screen or user interaction in the app, following Android's single-responsibility activity pattern.</p>
+      </div>
+      <div class="file-desc-item">
+        <div class="file-desc-title">SosService.java</div>
+        <p class="file-desc-text">A foreground service that sustains background monitoring and alert dispatch — always on, always watching.</p>
+      </div>
+      <div class="file-desc-item">
+        <div class="file-desc-title">BootReceiver.java</div>
+        <p class="file-desc-text">Ensures the app restarts its protective service on every device reboot via a Broadcast Receiver.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TABLE -->
+<section class="table-section" id="table">
+  <div class="section-header fade-in">
+    <span class="section-num">— Core Features</span>
+    <h2 class="section-title">Core Features at a Glance</h2>
+  </div>
+  <table class="features-table fade-in">
+    <tbody>
+      <tr><td>SOS Button</td><td>5-second countdown gives users a moment to cancel before contacts are alerted</td></tr>
+      <tr><td>GPS Tracking</td><td>Fetches and embeds live coordinates in every alert message sent</td></tr>
+      <tr><td>SMS Alert</td><td>Sends a pre-composed message to all saved emergency contacts</td></tr>
+      <tr><td>WhatsApp Alert</td><td>Opens WhatsApp with a pre-filled SOS message for quick dispatch</td></tr>
+      <tr><td>Shake Detection</td><td>Three device shakes silently trigger the full SOS sequence</td></tr>
+      <tr><td>Fake Call</td><td>Simulates an incoming call with ringtone and custom caller name</td></tr>
+      <tr><td>AI Chat</td><td>GPT-powered chatbot for safety advice and emotional support</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FUTURE -->
+<section class="future-section" id="future">
+  <div class="section-header fade-in">
+    <span class="section-num">06 / 06 — What's Next</span>
+    <h2 class="section-title">What's Next & Key Takeaways</h2>
+  </div>
+  <div class="future-inner">
+    <div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--accent2);margin-bottom:1.5rem;">Future Enhancements</h3>
+      <div class="future-list">
+        <div class="future-item fade-in">
+          <div class="future-dot"></div>
+          <div class="future-text">Cloud backup for emergency contacts across devices</div>
+        </div>
+        <div class="future-item fade-in">
+          <div class="future-dot"></div>
+          <div class="future-text">Live tracking dashboard for guardians and family members</div>
+        </div>
+        <div class="future-item fade-in">
+          <div class="future-dot"></div>
+          <div class="future-text">Automatic audio/video recording triggered during SOS</div>
+        </div>
+        <div class="future-item fade-in">
+          <div class="future-dot"></div>
+          <div class="future-text">Police server integration for direct emergency dispatch</div>
+        </div>
+      </div>
+    </div>
+    <div class="why-box fade-in">
+      <div class="why-title">Why SafeHer Matters</div>
+      <div class="why-item"><span class="why-check">✓</span><span>Works <strong>offline</strong> — SMS needs no data connection</span></div>
+      <div class="why-item"><span class="why-check">✓</span><span><strong>Sub-10 second</strong> end-to-end alert sequence</span></div>
+      <div class="why-item"><span class="why-check">✓</span><span><strong>Six layers</strong> of protection in a single app</span></div>
+      <div class="why-item"><span class="why-check">✓</span><span>Real-world applicable, not just academic</span></div>
+      <div class="tagline">"One tap can save a life."</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SafeHer</div>
+  <div class="footer-text">Android Studio · Java · Material Design · OpenAI API</div>
+  <div class="footer-text">Women Safety · Emergency Response · Real-World Impact</div>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
